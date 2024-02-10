@@ -4,13 +4,41 @@
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Web site created using create-snowpack-app" />
+    <meta
+      name="description"
+      content="Web site created using create-snowpack-app"
+    />
     <link rel="stylesheet" type="text/css" href="/index.css" />
     <title>Snowpack App</title>
   </head>
   <body>
-    <img id="img" src="/logo.svg" />
-    <canvas id="canvas"></canvas>
+    <h1></h1>
+    <div class="guess-game">
+      <div class="game-area">
+        <div class="inputs"></div>
+        <div class="control">
+          <button class="check">Check Word</button>
+          <button class="hint"><span></span> Hints</button>
+        </div>
+        <div class="message"></div>
+      </div>
+      <div class="key-colors">
+        <h2>Key Colors</h2>
+        <div class="key-color">
+          <div class="key in-place"></div>
+          <div class="key-text">Letter Is Correct and In Place</div>
+        </div>
+        <div class="key-color">
+          <div class="key not-in-place"></div>
+          <div class="key-text">Letter Is Correct But Not In Place</div>
+        </div>
+        <div class="key-color">
+          <div class="key no"></div>
+          <div class="key-text">Letter Is Wrong</div>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script type="module" src="/dist/index.js"></script>
     <!--

@@ -1,19 +1,25 @@
 // Setting Game name
 let gameName: string = "Guess Word Game";
-console.log(gameName);
+// console.log(gameName);
 let gameHeader = document.querySelector("h1") as HTMLHeadingElement;
 gameHeader.innerHTML = gameName;
 let footer = document.querySelector("footer") as HTMLElement;
-console.log(footer instanceof HTMLElement);
+// console.log(footer instanceof HTMLElement);
 footer.innerHTML = `${gameName} Created By Ayham Alahmad`;
 // Setting Game options
 let numbersOfTries: number = 6;
 let numbersOfLetters: number = 6;
 let currentTry: number = 1;
+// Manage Words
+let wordToGuess: string = "";
+const words: string[] =
+    ["Create", "Update", "Delete", "Master", "Branch", "Mainly", "Elzero", "School"];
+wordToGuess = words[Math.floor(Math.random() * words.length)].toLowerCase();
+console.log(wordToGuess);
 class generateInput {
     static InputsContainer = document.querySelector(".inputs") as HTMLDivElement;
     constructor() {
-        console.log(generateInput.InputsContainer);
+        // console.log(generateInput.InputsContainer);
         // Create Main Try Div
         for (let i: number = 1; i <= numbersOfTries; i++) {
             const tryDiv: HTMLDivElement = document.createElement("div");
@@ -54,19 +60,48 @@ class generateInput {
             });
 
             input.addEventListener("keydown", function (event) {
-                console.log(event);
+                // console.log(event);
                 const currentIndex = Array.from(inputs).indexOf(event.target as HTMLInputElement);
                 // console.log(currentIndex);
                 if (event.key === "ArrowRight") {
                     const nextInput = currentIndex + 1;
-                    if(nextInput< inputs.length) inputs[nextInput].focus();
+                    if (nextInput < inputs.length) inputs[nextInput].focus();
                 }
                 if (event.key === "ArrowLeft") {
                     const preInput = currentIndex - 1;
-                    if(preInput >= 0) inputs[preInput].focus();
+                    if (preInput >= 0) inputs[preInput].focus();
                 }
             })
         })
     }
 }
+class handleGuess {
+    constructor() {
+        let successGuess = true;
+        console.log("successGuess", successGuess);
+        for (let i = 1; i < numbersOfLetters; i++) {
+            const inputField = document.querySelector(`#guess-${currentTry}-letter-${i}`) as HTMLInputElement;
+            const letter = inputField.value.toLocaleLowerCase();
+            // console.log(letter);
+            const actualLetter = wordToGuess[i - 1];
+            // logic 
+            if (letter === actualLetter) {
+                // letter correct and in place 
+                inputField.classList.add("yes-in-place");
+            } else if (wordToGuess.includes(letter) && letter !== "") {
+                // letter correct and not in place 
+                inputField.classList.add("not-in-place");
+                successGuess = false;
+            } else {
+                inputField.classList.add("no");
+            }
+        }
+
+    }
+}
+const guessButton = document.querySelector(".check") as HTMLButtonElement;
+guessButton.addEventListener("click", () => {
+    new handleGuess();
+});
+
 const inputGenerator = new generateInput();

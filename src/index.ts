@@ -110,7 +110,25 @@ class handleGuess {
             // disabled guess Button
             guessButton.disabled = true;
         } else {
-            console.log("you lose");
+            (document.querySelector(`.try-${currentTry}`) as HTMLDivElement)?.classList.add("disabled-inputs");
+            const currentTryInputs: NodeListOf<HTMLInputElement> = document.querySelectorAll(`.try-${currentTry} input`);
+            currentTryInputs.forEach((input) => input.disabled = true);
+
+            currentTry++;
+
+            const nextTryInputs: NodeListOf<HTMLInputElement> = document.querySelectorAll(`.try-${currentTry} input`);
+            nextTryInputs.forEach((input) => input.disabled = false);
+
+            let element = document.querySelector(`.try-${currentTry}`) as HTMLDivElement;
+            if (element) {
+                (document.querySelector(`.try-${currentTry}`) as HTMLDivElement)?.classList.remove("disabled-inputs");
+                (element.children[1] as HTMLInputElement).focus();
+            } else {
+                // disabled guess Button
+                guessButton.disabled = true;
+                messageArea.innerHTML = `you lose the word is <span>${wordToGuess}</span>`;
+            }
+
         }
 
     }

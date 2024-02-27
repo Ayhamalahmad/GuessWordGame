@@ -4,6 +4,9 @@ let gameName: string = "Guess Word Game";
 let gameHeader = document.querySelector("h1") as HTMLHeadingElement;
 gameHeader.innerHTML = gameName;
 let footer = document.querySelector("footer") as HTMLElement;
+let messageArea = document.querySelector(".message") as HTMLDivElement;
+const guessButton = document.querySelector(".check") as HTMLButtonElement;
+
 // console.log(footer instanceof HTMLElement);
 footer.innerHTML = `${gameName} Created By Ayham Alahmad`;
 // Setting Game options
@@ -79,11 +82,12 @@ class handleGuess {
     constructor() {
         let successGuess = true;
         console.log("successGuess", successGuess);
-        for (let i = 1; i < numbersOfLetters; i++) {
+        for (let i = 1; i <= numbersOfLetters; i++) {
             const inputField = document.querySelector(`#guess-${currentTry}-letter-${i}`) as HTMLInputElement;
             const letter = inputField.value.toLocaleLowerCase();
             // console.log(letter);
             const actualLetter = wordToGuess[i - 1];
+            console.log(actualLetter);
             // logic 
             if (letter === actualLetter) {
                 // letter correct and in place 
@@ -97,9 +101,20 @@ class handleGuess {
             }
         }
 
+        // chek if the user win or lose
+        if (successGuess) {
+            messageArea.innerHTML = `you win the word is <span>${wordToGuess}</span>`;
+            // add disabled class on all try divs
+            let allTries: NodeListOf<HTMLDivElement> = document.querySelectorAll(".inputs > div");
+            allTries.forEach((tryDiv) => tryDiv.classList.add("disabled-inputs"));
+            // disabled guess Button
+            guessButton.disabled = true;
+        } else {
+            console.log("you lose");
+        }
+
     }
 }
-const guessButton = document.querySelector(".check") as HTMLButtonElement;
 guessButton.addEventListener("click", () => {
     new handleGuess();
 });
